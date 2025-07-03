@@ -1,20 +1,20 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/fastapi-backend:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/kardiogo-service:$COMMIT_SHA', '.']
   
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/fastapi-backend:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/kardiogo-service:$COMMIT_SHA']
   
   # Deploy container image to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
     - 'run'
     - 'deploy'
-    - 'fastapi-backend'
+    - 'kardiogo-service'
     - '--image'
-    - 'gcr.io/$PROJECT_ID/fastapi-backend:$COMMIT_SHA'
+    - 'gcr.io/$PROJECT_ID/kardiogo-service:$COMMIT_SHA'
     - '--region'
     - 'us-central1'
     - '--platform'
@@ -32,4 +32,4 @@ steps:
     - 'PROJECT_NAME=FastAPI Backend,PROJECT_DESCRIPTION=A fast and modern API built with FastAPI for Cloud Run,VERSION=1.0.0,API_V1_STR=/api/v1,HOST=0.0.0.0,PORT=8000,ALLOWED_HOSTS=*'
 
 images:
-  - 'gcr.io/$PROJECT_ID/fastapi-backend:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/kardiogo-service:$COMMIT_SHA'
